@@ -1,6 +1,12 @@
 name: CI Build
 
 on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Branch, tag, or SHA to build"
+        required: false
+        default: ""
   pull_request:
     branches: [ latest ]
     paths:
@@ -21,6 +27,8 @@ jobs:
       options: --privileged
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref != '' && inputs.ref || github.ref }}
 
       - name: Build Flatpak
         run: |

@@ -97,12 +97,6 @@ modules:
         MimeType=x-scheme-handler/antigravity;
         StartupWMClass=antigravity
         EOF
-      - |
-        if [ -f resources/app/out/vs/platform/browserOnboarding/static/antigravity.svg ]; then
-          cp resources/app/out/vs/platform/browserOnboarding/static/antigravity.svg /app/share/icons/hicolor/scalable/apps/com.google.Antigravity.svg
-        else
-          install -D assets/logo-for-github.png /app/share/icons/hicolor/256x256/apps/com.google.Antigravity.png
-        fi
     sources:
       - type: archive
         url: https://storage.googleapis.com/antigravity-public/antigravity-hub/2.0.1-6566078776737792/linux-x64/Antigravity.tar.gz
