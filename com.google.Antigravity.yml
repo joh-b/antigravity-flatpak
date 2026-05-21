@@ -57,9 +57,19 @@ modules:
   - name: antigravity
     buildsystem: simple
     build-commands:
-      - mkdir -p /app/lib/antigravity /app/bin /app/share/applications /app/share/icons/hicolor/scalable/apps /app/share/metainfo
-      - perl -pi -e 's/eeijfnjmjelapkebgockoeaadonbchdd/ldpkpkgnnacjhjfkagclpmibpplpmmlf/g' resources/app/extensions/antigravity/bin/language_server_linux_x64
-      - perl -pi -e 's/eeijfnjmjelapkebgockoeaadonbchdd/ldpkpkgnnacjhjfkagclpmibpplpmmlf/g' resources/app/out/vs/platform/browserOnboarding/static/browserOnboarding.html
+      - mkdir -p /app/lib/antigravity /app/bin /app/share/applications /app/share/icons/hicolor/scalable/apps /app/share/icons/hicolor/256x256/apps /app/share/metainfo
+      - |
+        if [ -f resources/bin/language_server ]; then
+          perl -pi -e 's/eeijfnjmjelapkebgockoeaadonbchdd/ldpkpkgnnacjhjfkagclpmibpplpmmlf/g' resources/bin/language_server
+        elif [ -f resources/app/extensions/antigravity/bin/language_server_linux_x64 ]; then
+          perl -pi -e 's/eeijfnjmjelapkebgockoeaadonbchdd/ldpkpkgnnacjhjfkagclpmibpplpmmlf/g' resources/app/extensions/antigravity/bin/language_server_linux_x64
+        fi
+      - |
+        if [ -f resources/app.asar ]; then
+          perl -pi -e 's/eeijfnjmjelapkebgockoeaadonbchdd/ldpkpkgnnacjhjfkagclpmibpplpmmlf/g' resources/app.asar
+        elif [ -f resources/app/out/vs/platform/browserOnboarding/static/browserOnboarding.html ]; then
+          perl -pi -e 's/eeijfnjmjelapkebgockoeaadonbchdd/ldpkpkgnnacjhjfkagclpmibpplpmmlf/g' resources/app/out/vs/platform/browserOnboarding/static/browserOnboarding.html
+        fi
       - cp -r . /app/lib/antigravity/
       - cp com.google.Antigravity.metainfo.xml /app/share/metainfo/com.google.Antigravity.metainfo.xml
       - cp host-bash /app/bin/host-bash
@@ -87,11 +97,16 @@ modules:
         MimeType=x-scheme-handler/antigravity;
         StartupWMClass=antigravity
         EOF
-      - cp resources/app/out/vs/platform/browserOnboarding/static/antigravity.svg /app/share/icons/hicolor/scalable/apps/com.google.Antigravity.svg
+      - |
+        if [ -f resources/app/out/vs/platform/browserOnboarding/static/antigravity.svg ]; then
+          cp resources/app/out/vs/platform/browserOnboarding/static/antigravity.svg /app/share/icons/hicolor/scalable/apps/com.google.Antigravity.svg
+        else
+          install -D assets/logo-for-github.png /app/share/icons/hicolor/256x256/apps/com.google.Antigravity.png
+        fi
     sources:
       - type: archive
-        url: https://edgedl.me.gvt1.com/edgedl/release2/j0qc3/antigravity/stable/1.23.2-4781536860569600/linux-x64/Antigravity.tar.gz
-        sha256: 5232a4048ff4fa15685d9a981ba4fba573e297f3efc9b76f638e794baf775725
+        url: https://storage.googleapis.com/antigravity-public/antigravity-hub/2.0.1-6566078776737792/linux-x64/Antigravity.tar.gz
+        sha256: 0727e1f56961b6d2347941f278da69cc6c17de3befe988524848cd167380e9ab
         strip-components: 1
       - type: file
         path: com.google.Antigravity.metainfo.xml
