@@ -116,6 +116,8 @@ modules:
         path: host-bash
       - type: file
         path: antigravity-host-exec
+      - type: file
+        path: assets/logo-for-github.png
   - name: host-spawn
     buildsystem: simple
     build-commands:
