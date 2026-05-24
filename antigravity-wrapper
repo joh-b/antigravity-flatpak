@@ -26,4 +26,4 @@ if [ -d "/gnu/store" ]; then
 fi
 
 # Launch binary
-exec /app/lib/antigravity/antigravity --no-sandbox --disable-setuid-sandbox "$@"
+exec /app/lib/antigravity/antigravity-ide --no-sandbox --disable-setuid-sandbox "$@"
